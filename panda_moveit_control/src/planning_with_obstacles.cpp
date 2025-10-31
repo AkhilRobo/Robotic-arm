@@ -1,25 +1,9 @@
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
-
-
-
 #include <moveit_msgs/msg/display_robot_state.hpp>
 #include <moveit_msgs/msg/display_trajectory.hpp>
-
-#include <moveit_msgs/msg/attached_collision_object.hpp>
-#include <moveit/move_group_interface/move_group_interface.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
-
-
-
-#include <moveit_msgs/msg/display_robot_state.hpp>
-#include <moveit_msgs/msg/display_trajectory.hpp>
-
 #include <moveit_msgs/msg/attached_collision_object.hpp>
 #include <moveit_msgs/msg/collision_object.hpp>
-
-#include <moveit/move_group_interface/move_group_interface.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
 #include "geometry_msgs/msg/transform_stamped.hpp"
 #include "tf2/exceptions.h"
 #include "tf2_ros/transform_listener.h"
@@ -47,12 +31,12 @@ void PlanningWithObstacles::plan() {
     tf_buffer = std::make_unique<tf2_ros::Buffer>(this->get_clock());
     tf_listener = std::make_shared<tf2_ros::TransformListener>(*tf_buffer);
 
-    //moveit::planning_interface::MoveGroupInterface move_group(_node, "arm");
-    _move_group = new moveit::planning_interface::MoveGroupInterface(_node, "arm");
-    
-    std::string fromFrameRel = _move_group->getPlanningFrame().c_str();
-    std::string toFrameRel =   _move_group->getEndEffectorLink().c_str();
-    
+    // _move_group = new moveit::planning_interface::MoveGroupInterface(_node, "arm");
+   auto _move_group = std::make_shared<moveit::planning_interface::MoveGroupInterface>(_node, "arm");
+
+std::string fromFrameRel = _move_group->getPlanningFrame();
+std::string toFrameRel   = _move_group->getEndEffectorLink();
+
     setup_world();
 
     sleep(3);

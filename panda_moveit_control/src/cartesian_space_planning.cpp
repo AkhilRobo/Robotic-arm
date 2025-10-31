@@ -23,10 +23,6 @@ void CartesianPlanning::plan() {
     auto tf_buffer {std::make_unique<tf2_ros::Buffer>(this->get_clock())};
     auto tf_listener { std::make_shared<tf2_ros::TransformListener>(*tf_buffer)};
 
-    //std::shared_ptr<tf2_ros::TransformListener> tf_listener{nullptr};
-    //std::unique_ptr<tf2_ros::Buffer> tf_buffer;
-    //tf_buffer = std::make_unique<tf2_ros::Buffer>(this->get_clock());
-    //tf_listener = std::make_shared<tf2_ros::TransformListener>(*tf_buffer);
 
     moveit::planning_interface::MoveGroupInterface move_group(_node, "arm");
     std::string fromFrameRel = move_group.getPlanningFrame().c_str();
@@ -59,6 +55,8 @@ void CartesianPlanning::plan() {
 
     moveit_msgs::msg::RobotTrajectory traj;
     const double jump_th = 0.0;
+    move_group.setMaxVelocityScalingFactor(1.0);
+    move_group.setMaxAccelerationScalingFactor(1.0);
     const double step = 0.01;
     double fraction = move_group.computeCartesianPath(waypoints, step, jump_th, traj);
     if( fraction > 0.8 )
