@@ -6,15 +6,26 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch.substitutions import Command
 from launch_ros.substitutions import FindPackageShare
-from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable
+from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable,RegisterEventHandler,DeclareLaunchArgument
 from launch.substitutions import PathJoinSubstitution
 from launch.actions import ExecuteProcess, IncludeLaunchDescription
+from launch.substitutions import (
+    Command, 
+    PathJoinSubstitution, 
+    LaunchConfiguration  # <-- Added
+)
 
 def generate_launch_description():
 
     ld = LaunchDescription()
     
+    use_sim_time_arg = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='True',
+        description='Use simulation (Gazebo) clock if true'
+    )
     
+    use_sim_time = LaunchConfiguration('use_sim_time')
 
     xacro_path = 'urdf/panda.urdf.xacro'
     
@@ -71,7 +82,9 @@ def generate_launch_description():
             ])
         ),
         launch_arguments={
-            'gz_args': f'-r -v 4 {sdf_file_path}'
+            'gz_args': f'-r -v 4 {sdf_file_path}',
+            'use_sim_time': use_sim_time 
+
         }.items()
     )
 
@@ -86,6 +99,7 @@ def generate_launch_description():
              'eef_controller'],
         output='screen'
     )
+    
     color_camera_bridge = Node(package='ros_gz_bridge', executable='parameter_bridge',
 			name = 'color_camera_bridge',
 			output='screen',
@@ -98,6 +112,16 @@ def generate_launch_description():
 			remappings = [
 				('/color_camera', '/color_camera')
 			])
+    
+    # 1️⃣1️⃣ Clock bridge
+    clock_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='clock_bridge',
+        output='screen',
+        parameters=[{'use_sim_time': use_sim_time}],
+        arguments=['/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock'],
+    )
 
     depth_camera_bridge = Node(package='ros_gz_bridge', executable='parameter_bridge',
 			name = 'depth_camera_bridge',
@@ -121,15 +145,21 @@ def generate_launch_description():
                      arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'camera_link', 'panda/link0/d435_depth'])
 
 
-
-    ld.add_action( load_joint_state_broadcaster )
-    ld.add_action( load_position_controller )       
+    ld.add_action(use_sim_time_arg)
     ld.add_action( gz_resource_path )
+    ld.add_action( ignition_gazebo_node )
+
     ld.add_action( robot_state_publisher_node )
     ld.add_action( spawn_node )
-    ld.add_action( ignition_gazebo_node )
+
+    ld.add_action( load_joint_state_broadcaster )
+    ld.add_action( load_position_controller )  
+    ld.add_action( load_eef_controller )  
+         
     ld.add_action( color_camera_bridge )
     ld.add_action( depth_camera_bridge )
     ld.add_action( depth_cam_data2cam_link_tf )
+    ld.add_action(clock_bridge) 
+
 
     return ld
