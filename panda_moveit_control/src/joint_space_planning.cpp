@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
 
 	sleep(3);
 
-	des_joint_pos = {0.0, -0.78, 0.0, -2.35, 0.0, 1.57, 0.78};
+	des_joint_pos = {0.2, -0.98, 0.1, -1.35, 0.0, 1.57, 0.78};
 
 	within_bounds = move_group.setJointValueTarget(des_joint_pos);
 
