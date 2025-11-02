@@ -1,0 +1,7 @@
+// Example entry in your .vscode/settings.json
+{
+    "urdf-visualizer.packages": {
+        "panda_description": "panda_description" 
+        // This assumes your workspace root is the open folder, and the package is in src/
+    }
+}
