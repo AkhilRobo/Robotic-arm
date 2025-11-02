@@ -7,7 +7,6 @@
   <!--                   -->
   <xacro:include filename="$(find panda_description)/urdf/panda_arm.xacro" />
   <xacro:include filename="$(find panda_description)/urdf/panda_gripper.xacro" />
-  <!-- <xacro:include filename="$(find panda_description)/urdf/CamToHand.xacro" /> -->
   <xacro:include filename="$(find panda_description)/urdf/panda_utils.xacro" />
 
   <!--            -->
@@ -42,7 +41,7 @@
   'effort' or certain combinations 'position,velocity') -->
   <xacro:arg name="ros2_control_command_interface" default="position" />
   <!-- The filepath to parameters of ROS 2 controllers 
-  <xacro:arg name="ros2_controller_parameters" default="$(find
+  <xacro:arg name="ros2_controller_parameters" defaulst="$(find
   panda_description)/config/controllers_$(arg ros2_control_command_interface).yaml"/>
   -->
 
