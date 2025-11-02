@@ -30,13 +30,13 @@
                 <mu2>50</mu2>
               </ode>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
             </friction>
             <contact>
-              <ode/>
+              <ode />
             </contact>
-            <bounce/>
+            <bounce />
           </surface>
           <max_contacts>10</max_contacts>
         </collision>
@@ -61,7 +61,7 @@
     </model>
     <gravity>0 0 -9.8</gravity>
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
-    <atmosphere type='adiabatic'/>
+    <atmosphere type='adiabatic' />
     <physics name='default_physics' default='0' type='ode'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
@@ -103,14 +103,14 @@
           <max_contacts>10</max_contacts>
           <surface>
             <contact>
-              <ode/>
+              <ode />
             </contact>
-            <bounce/>
+            <bounce />
             <friction>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
-              <ode/>
+              <ode />
             </friction>
           </surface>
         </collision>
@@ -157,14 +157,14 @@
           <max_contacts>10</max_contacts>
           <surface>
             <contact>
-              <ode/>
+              <ode />
             </contact>
-            <bounce/>
+            <bounce />
             <friction>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
-              <ode/>
+              <ode />
             </friction>
           </surface>
         </collision>
@@ -579,14 +579,14 @@
           <max_contacts>10</max_contacts>
           <surface>
             <contact>
-              <ode/>
+              <ode />
             </contact>
-            <bounce/>
+            <bounce />
             <friction>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
-              <ode/>
+              <ode />
             </friction>
           </surface>
         </collision>
@@ -623,14 +623,14 @@
           <max_contacts>10</max_contacts>
           <surface>
             <contact>
-              <ode/>
+              <ode />
             </contact>
-            <bounce/>
+            <bounce />
             <friction>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
-              <ode/>
+              <ode />
             </friction>
           </surface>
         </collision>
@@ -684,11 +684,11 @@
                 <coefficient>1</coefficient>
                 <use_patch_radius>0</use_patch_radius>
                 <surface_radius>0.01</surface_radius>
-                <ode/>
+                <ode />
               </torsional>
-              <ode/>
+              <ode />
             </friction>
-            <bounce/>
+            <bounce />
           </surface>
           <max_contacts>10</max_contacts>
         </collision>
@@ -711,6 +711,10 @@
       </link>
       <pose frame=''>0.35531 0.140875 0 0 -0 0</pose>
     </model>
+
+
+
+
     <state world_name='default'>
       <sim_time>1128 271000000</sim_time>
       <real_time>63 52603132</real_time>
@@ -746,7 +750,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='create'>
+      <!-- <model name='create'>
         <pose frame=''>0.561239 -0.063135 0.775935 8.2e-05 -0.0005 0.269434</pose>
         <scale>1 1 1</scale>
         <link name='base'>
@@ -767,7 +771,7 @@
           <acceleration>0.379616 -1.3721 -39.3244 -2.11388 -1.00551 0.000361</acceleration>
           <wrench>0.003796 -0.013721 -0.393244 0 -0 0</wrench>
         </link>
-      </model>
+      </model> -->
       <model name='disk_part'>
         <pose frame=''>-0.699973 0.100026 0.774994 -2.7e-05 -2.4e-05 -2.8e-05</pose>
         <scale>1 1 1</scale>
@@ -822,6 +826,12 @@
         <pose frame=''>0 0 10 0 -0 0</pose>
       </light>
     </state>
+
+
+
+
+
+
     <gui fullscreen='0'>
       <camera name='user_camera'>
         <pose frame=''>-0.072019 2.78043 1.74305 0 0.423642 -1.63261</pose>
@@ -836,20 +846,20 @@
           <pose frame=''>0 0 0.755 0 -0 0</pose>
           <geometry>
             <box>
-              <size>0.913 0.913 0.04</size>
+              <size>1.913 0.913 0.04</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
           <surface>
             <contact>
-              <ode/>
+              <ode />
             </contact>
-            <bounce/>
+            <bounce />
             <friction>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
-              <ode/>
+              <ode />
             </friction>
           </surface>
         </collision>
@@ -863,14 +873,14 @@
           <max_contacts>10</max_contacts>
           <surface>
             <contact>
-              <ode/>
+              <ode />
             </contact>
-            <bounce/>
+            <bounce />
             <friction>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
-              <ode/>
+              <ode />
             </friction>
           </surface>
         </collision>
@@ -884,14 +894,14 @@
           <max_contacts>10</max_contacts>
           <surface>
             <contact>
-              <ode/>
+              <ode />
             </contact>
-            <bounce/>
+            <bounce />
             <friction>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
-              <ode/>
+              <ode />
             </friction>
           </surface>
         </collision>
@@ -936,7 +946,7 @@
                 <mu2>1</mu2>
               </ode>
               <torsional>
-                <ode/>
+                <ode />
               </torsional>
             </friction>
             <contact>
@@ -947,7 +957,7 @@
                 <max_vel>0.1</max_vel>
               </ode>
             </contact>
-            <bounce/>
+            <bounce />
           </surface>
           <max_contacts>10</max_contacts>
         </collision>

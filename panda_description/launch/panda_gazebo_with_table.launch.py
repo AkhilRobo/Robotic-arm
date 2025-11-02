@@ -82,7 +82,9 @@ def generate_launch_description():
     sdf_file_path = os.path.join(
         FindPackageShare('panda_description').find('panda_description'),
         'world',
-        'pr2_perception.world'
+        # 'pr2_perception.world'
+        'Mainworld.sdf'
+        
     )
     ignition_gazebo_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(

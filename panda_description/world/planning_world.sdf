@@ -1,28 +1,145 @@
-<?xml version='1.0'?> 
-<sdf version='1.7'>
+<sdf version='1.10'>
   <world name='default'>
-    <physics name='1ms' type='ignored'>
+    <gravity>0 0 -9.8000000000000007</gravity>
+    <magnetic_field>6.0000000000000002e-06 2.3e-05 -4.1999999999999998e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='false' type='ode'>
       <max_step_size>0.001</max_step_size>
-      <real_time_factor>1.0</real_time_factor>
+      <real_time_factor>1</real_time_factor>
       <real_time_update_rate>1000</real_time_update_rate>
     </physics>
-
-    <light name='sun' type='directional'>
-      <cast_shadows>1</cast_shadows>
-      <pose frame=''>0 0 10 0 -0 0</pose>
-      <diffuse>0.8 0.8 0.8 1</diffuse>
-      <specular>0.2 0.2 0.2 1</specular>
-      <attenuation>
-        <range>1000</range>
-        <constant>0.9</constant>
-        <linear>0.01</linear>
-        <quadratic>0.001</quadratic>
-      </attenuation>
-      <direction>-0.5 0.1 -0.9</direction>
-    </light>
-
+    <scene>
+      <ambient>0.400000006 0.400000006 0.400000006 1</ambient>
+      <background>0.699999988 0.699999988 0.699999988 1</background>
+      <shadows>true</shadows>
+    </scene>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <state world_name='default'>
+      <sim_time>1128 271000000</sim_time>
+      <real_time>63 52603132</real_time>
+      <wall_time>1499228121 683701000</wall_time>
+      <iterations>62773</iterations>
+      <model name='beer'>
+        <pose>0.41439700000000002 0.18340000000000001 0.77498999999999996 9.9999999999999953e-07 -2.7000000000000013e-05 -0.0018949999999999995</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0.41439399999999998 0.18340000000000001 0.88998999999999995 9.9999999999999953e-07 -2.7000000000000013e-05 -0.0018949999999999995</pose>
+          <velocity>0 0 0 0 0 0</velocity>
+          <acceleration>0 0 -9.8000000000000007 -9.9999999999999995e-07 0 0</acceleration>
+          <wrench>0 0 -3.8220000000000001 0 0 0</wrench>
+        </link>
+      </model>
+      <model name='bowl'>
+        <pose>-0.199099 0.17191300000000001 0.79251000000000005 -8.4000000000000022e-05 5.4000000000000025e-05 -0.00016000000000000012</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-0.199099 0.17191300000000001 0.79251000000000005 -8.4000000000000022e-05 5.4000000000000025e-05 -0.00016000000000000012</pose>
+          <velocity>0 0 0 0 0 0</velocity>
+          <acceleration>0 0 -9.8000000000000007 0 0 0</acceleration>
+          <wrench>0 0 -0.97999999999999998 0 0 0</wrench>
+        </link>
+      </model>
+      <model name='cafe_table'>
+        <pose>0 0 0 0 0 0</pose>
+        <scale>2 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 0 0</pose>
+          <velocity>0 0 0 0 0 0</velocity>
+          <acceleration>0 0 0 0 0 0</acceleration>
+          <wrench>0 0 0 0 0 0</wrench>
+        </link>
+      </model>
+      <model name='create'>
+        <pose>0.56123900000000004 -0.063134999999999997 0.77593500000000004 8.2000000000000028e-05 -0.00050000000000000023 0.26943400000000012</pose>
+        <scale>1 1 1</scale>
+        <link name='base'>
+          <pose>0.56123900000000004 -0.063134999999999997 0.77593500000000004 8.2000000000000028e-05 -0.00050000000000000023 0.26943400000000012</pose>
+          <velocity>0.001848 0.0012179999999999999 -0.0010189999999999999 0.027442999999999999 0.00096900000000000013 0.023678999999999992</velocity>
+          <acceleration>0.011625999999999999 -0.041175999999999997 -0.37922299999999998 2.2217600000000002 0.64627800000000024 0.026073999999999851</acceleration>
+          <wrench>0.025973 -0.091988 -0.84718300000000002 0 0 0</wrench>
+        </link>
+        <link name='left_wheel'>
+          <pose>0.52662100000000001 0.062164999999999998 0.80800700000000003 3.1415000000000002 0.26448400000000016 -2.8721800000000002</pose>
+          <velocity>-0.00088999999999999995 -0.0011900000000000001 0.015265000000000001 0.038775000000000011 -0.034762999999999988 0.023676999999999997</velocity>
+          <acceleration>0.40237200000000001 -1.4429700000000001 30.827200000000001 -1.3232300000000006 0.94439799999999985 0.0041639999999998571</acceleration>
+          <wrench>0.0040239999999999998 -0.01443 0.30827199999999999 0 0 0</wrench>
+        </link>
+        <link name='right_wheel'>
+          <pose>0.59582800000000002 -0.18844900000000001 0.80798800000000004 3.1414300000000002 -1.0034600000000005 -2.87202</pose>
+          <velocity>0.0050169999999999998 0.00054000000000000001 -0.020294 -0.014360000000000006 0.14400600000000005 0.023689000000000002</velocity>
+          <acceleration>0.37961600000000001 -1.3721000000000001 -39.324399999999997 -2.11388 -1.0055100000000001 0.0003609999999999763</acceleration>
+          <wrench>0.0037959999999999999 -0.013721000000000001 -0.39324399999999998 0 0 0</wrench>
+        </link>
+      </model>
+      <model name='disk_part'>
+        <pose>-0.69997299999999996 0.100026 0.77499399999999996 -2.6999999999999999e-05 -2.4000000000000001e-05 -2.8000000000000006e-05</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-0.69997299999999996 0.100026 0.77499399999999996 -2.6999999999999999e-05 -2.4000000000000001e-05 -2.8000000000000006e-05</pose>
+          <velocity>0 0 0 0 0 0</velocity>
+          <acceleration>-0.90744100000000005 1.0628200000000001 -7.5647000000000002 1.7154199999999997 -0.73349400000000031 -0.20227899999999982</acceleration>
+          <wrench>-0.45372099999999999 0.531412 -3.7823500000000001 0 0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 0 0</pose>
+          <velocity>0 0 0 0 0 0</velocity>
+          <acceleration>0 0 0 0 0 0</acceleration>
+          <wrench>0 0 0 0 0 0</wrench>
+        </link>
+      </model>
+      <model name='hammer'>
+        <pose>0.20000000000000001 0.30674000000000001 0.83393499999999998 0 0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0.20000000000000001 0.30674000000000001 0.83393499999999998 0 0 0</pose>
+          <velocity>0 0 0 0 0 0</velocity>
+          <acceleration>0 0 0 0 0 0</acceleration>
+          <wrench>0 0 0 0 0 0</wrench>
+        </link>
+      </model>
+      <model name='plastic_cup'>
+        <pose>45070900 -21010200 227286000 0 0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>45070900 -21010200 227286000 0 0 0</pose>
+          <velocity>0 0 -1569.76 0 0 0</velocity>
+          <acceleration>0 0 -9.8000000000000007 0 0 0</acceleration>
+          <wrench>0 0 -0.58701999999999999 0 0 0</wrench>
+        </link>
+      </model>
+      <model name='soda_can'>
+        <pose>0.016906999999999998 0.27059899999999998 0.77068300000000001 0.001232 -0.0099040000000000048 0.65085099999999985</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0.016906999999999998 0.27059899999999998 0.77068300000000001 0.001232 -0.0099040000000000048 0.65085099999999985</pose>
+          <velocity>0 0 0 0 0 0</velocity>
+          <acceleration>-1.9999999999999999e-06 1.9999999999999999e-06 -9.9999999999999995e-07 -1.2000000000000004e-05 -1.2000000000000004e-05 -7.9999999999999996e-06</acceleration>
+          <wrench>-9.9999999999999995e-07 9.9999999999999995e-07 0 0 0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='false'>
+      <camera name='user_camera'>
+        <pose>-0.072019 2.78043 1.74305 0 0.42364200000000013 -1.6326099999999999</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
     <model name='ground_plane'>
-      <static>1</static>
+      <static>true</static>
       <link name='link'>
         <collision name='collision'>
           <geometry>
@@ -32,10 +149,6 @@
             </plane>
           </geometry>
           <surface>
-            <contact>
-              <collide_bitmask>65535</collide_bitmask>
-              <ode/>
-            </contact>
             <friction>
               <ode>
                 <mu>100</mu>
@@ -45,12 +158,15 @@
                 <ode/>
               </torsional>
             </friction>
+            <contact>
+              <ode/>
+            </contact>
             <bounce/>
           </surface>
-          <max_contacts>10</max_contacts> 
+          <max_contacts>10</max_contacts>
         </collision>
         <visual name='visual'>
-          <cast_shadows>0</cast_shadows>
+          <cast_shadows>false</cast_shadows>
           <geometry>
             <plane>
               <normal>0 0 1</normal>
@@ -58,46 +174,54 @@
             </plane>
           </geometry>
           <material>
-            <ambient>0.7 0.7 0.7 1.0</ambient>
-            <diffuse>0.7 0.7 0.7 1.0</diffuse>
-            <specular>0.01 0.01 0.01 1.0</specular>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
           </material>
         </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
       </link>
+      <pose>0 0 0 0 0 0</pose>
+      <self_collide>false</self_collide>
     </model>
-
-
-
-
-<model name='obstacle'>
-      <pose frame=''>0.6 0.083294 0.15 0 -0 0</pose>
-      <link name='ob'>
-        <visual name='ob_0_Visual_0'>
-          <pose frame=''>0.0 0.0 0.0 0 0 0</pose>
+    <model name='beer'>
+      <link name='link'>
+        <pose>0 0 0.115 0 0 0</pose>
+        <inertial>
+          <mass>0.39000000000000001</mass>
+          <inertia>
+            <ixx>0.00058</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00058</iyy>
+            <iyz>0</iyz>
+            <izz>0.00019000000000000001</izz>
+          </inertia>
+          <pose>0 0 0 0 0 0</pose>
+        </inertial>
+        <collision name='collision'>
           <geometry>
-            <box>
-              <size>0.1 0.5 0.3</size>
-            </box>
+            <cylinder>
+              <radius>0.055</radius>
+              <length>0.23000000000000001</length>
+            </cylinder>
           </geometry>
-          <material>
-            <ambient>0.7 0.490196 0.0666667 1</ambient>
-            <diffuse>0.7 0.490196 0.0666667 1</diffuse>
-            <specular>0.01 0.01 0.01 1.0</specular>
-          </material>
-          <meta>
-            <layer>0</layer>
-          </meta>
-        </visual>
-        <collision name='ob_0_Collision_0'>
-          <geometry>
-            <box>
-              <size>0.1 0.5 0.3</size>
-            </box>
-          </geometry>
-          <pose frame=''>0.0 0.0 0.0 0 0 0</pose>
           <max_contacts>10</max_contacts>
           <surface>
             <contact>
@@ -112,11 +236,438 @@
             </friction>
           </surface>
         </collision>
-        </link>
-        <static>1</static>
-        </model>
-
-
-
-    </world>
+        <visual name='visual'>
+          <geometry>
+            <cylinder>
+              <radius>0.055</radius>
+              <length>0.23000000000000001</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://beer/materials/scripts</uri>
+              <uri>model://beer/materials/textures</uri>
+              <name>Beer/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.1579433679434821 -0.33104619383811962 0.78042895595005957 7.2894423767136882e-09 -0.00079292719643071329 -8.5730717485134914e-06</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='bowl'>
+      <link name='link'>
+        <inertial>
+          <mass>0.10000000000000001</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <pose>0 0 0 0 0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <cylinder>
+              <radius>0.098000000000000004</radius>
+              <length>0.035000000000000003</length>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://bowl/meshes/bowl.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.050294626500666052 -0.36851000785827637 0.798094336650915 8.7310038930961407e-09 -0.00079181420446614395 -1.000880217453867e-07</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='disk_part'>
+      <link name='link'>
+        <inertial>
+          <pose>0 0 0.02895 0 0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.0032121799999999998</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0032121799999999998</iyy>
+            <iyz>0</iyz>
+            <izz>0.0061449900000000003</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0.02895 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://disk_part/meshes/disk.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.4450012629032043 -0.44487258791924678 0.78090720751466125 2.2187598480430167e-08 -0.00080036948047078078 -2.7993704084993251e-05</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='hammer'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://hammer/meshes/hammer.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://hammer/meshes/hammer.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.75531333684921265 -0.23502400517463684 0.80361801385879517 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='plastic_cup'>
+      <link name='link'>
+        <pose>0 0 0.065000000000000002 0 0 0</pose>
+        <inertial>
+          <mass>0.059900000000000002</mass>
+          <inertia>
+            <ixx>0.00030289599999999998</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00030289599999999998</iyy>
+            <iyz>0</iyz>
+            <izz>3.2876400000000003e-05</izz>
+          </inertia>
+          <pose>0 0 0 0 0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://plastic_cup/meshes/plastic_cup.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <poissons_ratio>0.34999999999999998</poissons_ratio>
+              <elastic_modulus>3102640000</elastic_modulus>
+              <ode>
+                <kp>100000</kp>
+                <kd>100</kd>
+                <max_vel>100</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <coefficient>1</coefficient>
+                <use_patch_radius>false</use_patch_radius>
+                <surface_radius>0.01</surface_radius>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://plastic_cup/meshes/plastic_cup.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/GreyTransparent</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.61134702701774568 -0.26704967005127844 0.78868645550168059 8.6227515050743794e-05 -0.00078717895801970678 -0.1090270136105108</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='cafe_table'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose>0 0 0.755 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.913 0.91300000000000003 0.040000000000000001</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='column'>
+          <pose>0 0 0.37 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.042000000000000003 0.042000000000000003 0.73999999999999999</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base'>
+          <pose>0 0 0.02 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.56000000000000005 0.56000000000000005 0.040000000000000001</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://cafe_table/meshes/cafe_table.dae</uri>
+              <scale>2 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.012500000186264515 -0.17558899521827698 0.0055646002292633057 0 -0.000791820994349555 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='soda_can'>
+      <link name='link'>
+        <inertial>
+          <pose>-0.01 -0.012 0.14999999999999999 0 0 0</pose>
+          <mass>0.39000000000000001</mass>
+          <inertia>
+            <ixx>0.00058</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00058</iyy>
+            <iyz>0</iyz>
+            <izz>0.00019000000000000001</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 -0.46000000000000002 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can.dae</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <kp>10000000</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.10000000000000001</max_vel>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0 0 -0.46000000000000002 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.19050996082724181 -0.1375738530271895 0.77681151691662442 -0.011212775387965807 0.0032367263547412655 1.9134960450310944e-05</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <include>
+      <uri>file://<urdf-string></uri>
+      <name>panda</name>
+      <pose>0.43878200000000001 0.13431899999999999 0.77593500000000004 0 0 0</pose>
+    </include>
+    <light name='sun' type='directional'>
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>-0.5 0.10000000000000001 -0.90000000000000002</direction>
+      <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+      <specular>0.200000003 0.200000003 0.200000003 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <linear>0.0099999997764825821</linear>
+        <constant>0.89999997615814209</constant>
+        <quadratic>0.0010000000474974513</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+  </world>
 </sdf>

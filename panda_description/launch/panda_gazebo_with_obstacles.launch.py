@@ -49,14 +49,16 @@ def generate_launch_description():
 
     workspace_path = os.environ.get('COLCON_PREFIX_PATH') or os.environ.get('AMENT_PREFIX_PATH')
     pkg_panda_description = workspace_path + "/panda_description/share"
-    gz_resource_path = SetEnvironmentVariable(
-        name='GZ_SIM_RESOURCE_PATH',
-        value=[pkg_panda_description]
-    )
+    # gz_resource_path = SetEnvironmentVariable(
+    #     name='GZ_SIM_RESOURCE_PATH',
+    #     value=[pkg_panda_description]
+    # )
 
     # Spawn
     spawn_node = Node(package='ros_gz_sim', executable='create',
-                 arguments=['-name', 'panda', '-topic', '/robot_description'], output='screen')
+                 arguments=['-name', 'panda', '-topic', '/robot_description', '-x', '0.438782',
+                            '-y', '0.134319',
+                            '-z', '0.775935'], output='screen')
 
     
     load_joint_state_broadcaster = ExecuteProcess(
@@ -71,7 +73,7 @@ def generate_launch_description():
     sdf_file_path = os.path.join(
         FindPackageShare('panda_description').find('panda_description'),
         'world',
-        'planning_world.sdf'
+        'Mainworld.sdf'
     )
     ignition_gazebo_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -146,7 +148,7 @@ def generate_launch_description():
 
 
     ld.add_action(use_sim_time_arg)
-    ld.add_action( gz_resource_path )
+    # ld.add_action( gz_resource_path )
     ld.add_action( ignition_gazebo_node )
 
     ld.add_action( robot_state_publisher_node )
