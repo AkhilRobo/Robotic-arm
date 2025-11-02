@@ -63,7 +63,11 @@ def generate_launch_description():
 
     # Spawn
     spawn_node = Node(package='ros_gz_sim', executable='create',
-                 arguments=['-name', 'panda', '-topic', '/robot_description'], output='screen')
+                 arguments=['-name', 'panda', '-topic', '/robot_description' ,
+                            '-x', '0.438782',
+                            '-y', '0.134319',
+                            '-z', '0.775935'], 
+                            output='screen')
 
     
     load_joint_state_broadcaster = ExecuteProcess(

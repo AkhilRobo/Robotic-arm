@@ -12,7 +12,7 @@
   <xacro:arg name="use_nominal_extrinsics" default="true" />
   <xacro:arg name="add_plug" default="false" />
   <xacro:arg name="use_mesh" default="true" />
-  <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+  <!-- <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" /> -->
 
   <!--            -->
   <!-- Properties -->
@@ -374,7 +374,7 @@
     -->
 
 
-    <xacro:sensor_d435 parent="${prefix}${link0_name}"
+    <!-- <xacro:sensor_d435 parent="${prefix}${link0_name}"
       use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)"
       use_mesh="$(arg use_mesh)">
       <origin xyz="0.1 0.0 0.05" rpy="0 0.0 0" />
@@ -432,7 +432,7 @@
           <render_engine>ogre</render_engine>
         </plugin>
       </sensor>
-    </gazebo>
+    </gazebo> -->
 
 
     <ros2_control name="2DofPosition" type="gz_ros2_control/GazeboSimSystem">
