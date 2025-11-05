@@ -27,7 +27,7 @@ def generate_launch_description():
     
     use_sim_time = LaunchConfiguration('use_sim_time')
 
-    xacro_path = 'urdf/panda.urdf.xacro'
+    xacro_path = 'urdf/PoleSensor.urdf.xacro'
     
     robot_description = PathJoinSubstitution([
         get_package_share_directory('panda_description'),	
@@ -80,11 +80,11 @@ def generate_launch_description():
                             output='screen')
 
     
-    load_joint_state_broadcaster = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
-             'joint_state_broadcaster'],
-        output='screen'
-    )
+    # load_joint_state_broadcaster = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+    #          'joint_state_broadcaster'],
+    #     output='screen'
+    # )
 
     
     
@@ -113,17 +113,17 @@ def generate_launch_description():
         }.items()
     )
 
-    load_position_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
-             'arm_controller'],
-        output='screen'
-    )
+    # load_position_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+    #          'arm_controller'],
+    #     output='screen'
+    # )
 
-    load_eef_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
-             'eef_controller'],
-        output='screen'
-    )
+    # load_eef_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+    #          'eef_controller'],
+    #     output='screen'
+    # )
     
     color_camera_bridge = Node(package='ros_gz_bridge', executable='parameter_bridge',
 			name = 'color_camera_bridge',
@@ -162,12 +162,31 @@ def generate_launch_description():
 				('/depth_camera', '/depth_camera'),
 				('/depth_camera/points', '/depth_camera/points')
 			])
-	
+#     world_tf = Node(
+#     package='tf2_ros',
+#     executable='static_transform_publisher',
+#     name='world_tf',
+#     arguments=['0', '0', '0', '0', '0', '0', 'world', 'link_1']
+# )
+
     depth_cam_data2cam_link_tf = Node(package='tf2_ros',
                      executable='static_transform_publisher',
                      name='cam3Tolink',
                      output='log',
-                     arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'camera_link', 'panda/link0/d435_depth'])
+                     arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'camera_link', 'panda/link_1/d435_depth'])
+
+#     depth_cam_data2cam_link_tf = Node(
+#     package='tf2_ros',
+#     executable='static_transform_publisher',
+#     name='cam3Tolink',
+#     output='log',
+#     arguments=[
+#         '0', '0', '0',      # XYZ offset
+#         '0', '0', '0',      # RPY rotation
+#         'camera_link',      # parent frame
+#         'camera_depth_optical_frame'   # child frame
+#     ]
+# )
 
 
     ld.add_action(use_sim_time_arg)
@@ -179,12 +198,13 @@ def generate_launch_description():
     ld.add_action( robot_state_publisher_node )
     ld.add_action( spawn_node )
 
-    ld.add_action( load_joint_state_broadcaster )
-    ld.add_action( load_position_controller )  
-    ld.add_action( load_eef_controller )  
+    # ld.add_action( load_joint_state_broadcaster )
+    # ld.add_action( load_position_controller )  
+    # ld.add_action( load_eef_controller )  
          
     ld.add_action( color_camera_bridge )
     ld.add_action( depth_camera_bridge )
+    # ld.add_action( world_tf )
     ld.add_action( depth_cam_data2cam_link_tf )
     ld.add_action(clock_bridge) 
 

@@ -4,7 +4,7 @@ from launch.actions import (
     IncludeLaunchDescription, 
     SetEnvironmentVariable, 
     RegisterEventHandler, 
-    DeclareLaunchArgument  # <-- Added
+    DeclareLaunchArgument
 )
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -12,7 +12,7 @@ from launch_ros.actions import Node
 from launch.substitutions import (
     Command, 
     PathJoinSubstitution, 
-    LaunchConfiguration  # <-- Added
+    LaunchConfiguration
 )
 from ament_index_python.packages import get_package_share_directory
 
@@ -64,22 +64,23 @@ def generate_launch_description():
         output='screen'
     )
 
+    # 6.5️⃣ Static Transform Publisher (THE FIX)
+    # This node publishes the static transform from 'world' to 'panda/link0'.
+    # 6.5️⃣ Static Transform Publisher (THE FIX)
+    static_tf_publisher = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='world_to_base_broadcaster',  # <-- Renamed for clarity (optional)
+        arguments=[
+            '0', '0', '0',  # X, Y, Z offset
+            '0', '0', '0',  # Yaw, Pitch, Roll (in RADIANS)
+            'world',        # Parent Frame
+            'link0'         # <--- THIS IS THE FIX
+        ],
+        parameters=[{'use_sim_time': use_sim_time}]
+    )
+
     # 7️⃣ Launch Gazebo
-    # gazebo = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource([
-    #         os.path.join(
-    #             get_package_share_directory('ros_gz_sim'),
-    #             'launch',
-    #             'gz_sim.launch.py'
-    #         )
-    #     ]),
-    #     launch_arguments={
-    #         'gz_args': '-r -v 4 empty.sdf',
-    #         'use_sim_time': use_sim_time  # <-- Pass to Gazebo
-    #     }.items(),
-    # )
-
-
     # gazebo_world_args = '-r -v 4 -s libros_gz_sim-clock-plugin.so --headless-rendering empty.sdf'
     gazebo_world_args = '-r -v 4 empty.sdf'
 
@@ -92,10 +93,11 @@ def generate_launch_description():
             )
         ]),
         launch_arguments={
-            'gz_args': gazebo_world_args,  # <-- MODIFIED
+            'gz_args': gazebo_world_args,
             'use_sim_time': use_sim_time 
         }.items(),
     )
+    
     # 8️⃣ Spawn robot into Gazebo
     spawn_entity = Node(
         package='ros_gz_sim',
@@ -146,7 +148,7 @@ def generate_launch_description():
         )
     )
 
-    # 🔟 Camera bridges
+    # 1️⃣0️⃣ Camera bridges
     color_camera_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -155,7 +157,8 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}], # <-- Use variable
         arguments=['/color_camera@sensor_msgs/msg/Image[ignition.msgs.Image'],
     )
-# 1️⃣1️⃣ Clock bridge
+    
+    # 1️⃣1️⃣ Clock bridge
     clock_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -164,6 +167,7 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}],
         arguments=['/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock'],
     )
+    
     depth_camera_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -183,6 +187,7 @@ def generate_launch_description():
     ld.add_action(gazebo)
     # ld.add_action(controller_manager)
     ld.add_action(robot_state_publisher_node)
+    ld.add_action(static_tf_publisher)  # <-- ✅ ADDED THIS LINE
     ld.add_action(spawn_entity)
     ld.add_action(delayed_joint_state)
     ld.add_action(delayed_arm_controller)
