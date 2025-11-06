@@ -18,6 +18,16 @@ def generate_launch_description():
 
     ld = LaunchDescription()
     
+    rviz_file = os.path.join(
+        get_package_share_directory('panda_description'), "rviz", "Main.rviz"
+    )
+    
+    rviz_arg = DeclareLaunchArgument(
+        'rvizconfig', 
+        default_value=rviz_file,
+        description='Absolute path to RViz config file'
+    )
+
     use_sim_time_arg = DeclareLaunchArgument(
         'use_sim_time',
         default_value='True',
@@ -55,6 +65,12 @@ def generate_launch_description():
         remappings=[
             ('/robot_description', '/sensor_pole')
         ]
+    )
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        output='screen',
+        arguments=['-d', LaunchConfiguration('rvizconfig')]
     )
 
     workspace_path = os.environ.get('COLCON_PREFIX_PATH') or os.environ.get('AMENT_PREFIX_PATH')
@@ -141,6 +157,8 @@ def generate_launch_description():
     
     ld.add_action(gz_bridge_node)
     ld.add_action(depth_cam_data2cam_link_tf)
+    ld.add_action(rviz_arg)
+    ld.add_action(rviz_node)
     ld.add_action(clock_bridge) 
 
     return ld
