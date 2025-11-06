@@ -66,7 +66,7 @@ private:
         pcl::PassThrough<pcl::PointXYZRGB> pass;
         pass.setInputCloud(cloud_downsampled);
         pass.setFilterFieldName("z");        
-        pass.setFilterLimits(0.6, 1.1);    
+        pass.setFilterLimits(0.075935, 0.575935);    
         pass.filter(*cloud_passed);
 
         publish_cloud(cloud_passed, msg->header, passthrough_pub_);
