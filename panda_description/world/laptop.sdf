@@ -188,63 +188,166 @@
       <pose>0 0 0 0 0 0</pose>
       <self_collide>false</self_collide>
     </model>
-    <model name='beer'>
+    <model name='grey_wall1'>
+      <static>true</static>
       <link name='link'>
-        <pose>0 0 0.115 0 0 0</pose>
-        <inertial>
-          <mass>0.39000000000000001</mass>
-          <inertia>
-            <ixx>0.00058</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.00058</iyy>
-            <iyz>0</iyz>
-            <izz>0.00019000000000000001</izz>
-          </inertia>
-          <pose>0 0 0 0 0 0</pose>
-        </inertial>
+        <pose>0 0 1.3999999999999999 0 0 0</pose>
         <collision name='collision'>
           <geometry>
-            <cylinder>
-              <radius>0.055</radius>
-              <length>0.23000000000000001</length>
-            </cylinder>
+            <box>
+              <size>7.5 0.20000000000000001 2.7999999999999998</size>
+            </box>
           </geometry>
-          <max_contacts>10</max_contacts>
           <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
             <friction>
-              <torsional>
-                <ode/>
-              </torsional>
               <ode/>
             </friction>
+            <bounce/>
+            <contact/>
           </surface>
         </collision>
         <visual name='visual'>
+          <cast_shadows>false</cast_shadows>
           <geometry>
-            <cylinder>
-              <radius>0.055</radius>
-              <length>0.23000000000000001</length>
-            </cylinder>
+            <box>
+              <size>7.5 0.20000000000000001 2.7999999999999998</size>
+            </box>
           </geometry>
           <material>
-            <script>
-              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://beer/materials/scripts</uri>
-              <uri>model://beer/materials/textures</uri>
-              <name>Beer/Diffuse</name>
-            </script>
+            <ambient>0.800000012 0.800000012 0.800000012 1</ambient>
+            <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://grey_wall/materials/textures/grey_wall.png</albedo_map>
+                <metalness>0.0</metalness>
+                <roughness>0.4</roughness>
+              </metal>
+            </pbr>
           </material>
         </visual>
-        <self_collide>false</self_collide>
-        <kinematic>false</kinematic>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>-0.070377499999999996 0.018792300000000001 1.4224000000000001 -8.1344599999999996e-08 5.2575999999999996e-07 -3.9901399999999987e-06</pose>
-      <static>false</static>
+      <pose>-3.6800000000000002 -0.48683700000000002 0 0 0 -1.5690299999999999</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='grey_wall2'>
+      <static>true</static>
+      <link name='link'>
+        <pose>0 0 1.3999999999999999 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>7.5 0.20000000000000001 2.7999999999999998</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <box>
+              <size>7.5 0.20000000000000001 2.7999999999999998</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.800000012 0.800000012 0.800000012 1</ambient>
+            <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://grey_wall/materials/textures/grey_wall.png</albedo_map>
+                <metalness>0.0</metalness>
+                <roughness>0.4</roughness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>3.6331799999999999 -0.37377199999999999 0 0 0 -1.5928899999999999</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='grey_wall3'>
+      <static>true</static>
+      <link name='link'>
+        <pose>0 0 1.3999999999999999 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>7.5 0.20000000000000001 2.7999999999999998</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <box>
+              <size>7.5 0.20000000000000001 2.7999999999999998</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.800000012 0.800000012 0.800000012 1</ambient>
+            <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+            <pbr>
+              <metal>
+                <albedo_map>model://grey_wall/materials/textures/grey_wall.png</albedo_map>
+                <metalness>0.0</metalness>
+                <roughness>0.4</roughness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 3.3951600000000002 0 0 0 0</pose>
       <self_collide>false</self_collide>
     </model>
     <model name='bowl'>
@@ -295,135 +398,7 @@
         <pose>0 0 0 0 0 0</pose>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>1.1164809840170999 -0.25189288421716638 1.4401430455588207 -0.023203097270107876 0.011892645134793578 0.0025349277880828093</pose>
-      <static>false</static>
-      <self_collide>false</self_collide>
-    </model>
-    <model name='disk_part'>
-      <link name='link'>
-        <inertial>
-          <pose>0 0 0.02895 0 0 0</pose>
-          <mass>0.5</mass>
-          <inertia>
-            <ixx>0.0032121799999999998</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.0032121799999999998</iyy>
-            <iyz>0</iyz>
-            <izz>0.0061449900000000003</izz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <pose>0 0 0.02895 0 0 0</pose>
-          <geometry>
-            <cylinder>
-              <length>0.0579</length>
-              <radius>0.15678</radius>
-            </cylinder>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://disk_part/meshes/disk.dae</uri>
-              <scale>1 1 1</scale>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://arm_part/materials/textures</uri>
-              <uri>model://arm_part/materials/scripts</uri>
-              <name>ArmPart/Diffuse</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>false</self_collide>
-        <kinematic>false</kinematic>
-        <pose>0 0 0 0 0 0</pose>
-        <enable_wind>false</enable_wind>
-      </link>
-      <pose>-0.30761188245443322 -0.4136625235221022 1.4223994702494349 4.7303243044754894e-07 -2.3014391506180274e-08 0.013953899750225721</pose>
-      <static>false</static>
-      <self_collide>false</self_collide>
-    </model>
-    <model name='plastic_cup'>
-      <link name='link'>
-        <pose>0 0 0.065000000000000002 0 0 0</pose>
-        <inertial>
-          <mass>0.059900000000000002</mass>
-          <inertia>
-            <ixx>0.00030289599999999998</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.00030289599999999998</iyy>
-            <iyz>0</iyz>
-            <izz>3.2876400000000003e-05</izz>
-          </inertia>
-          <pose>0 0 0 0 0 0</pose>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://plastic_cup/meshes/plastic_cup.dae</uri>
-              <scale>1 1 1</scale>
-            </mesh>
-          </geometry>
-          <surface>
-            <contact>
-              <poissons_ratio>0.34999999999999998</poissons_ratio>
-              <elastic_modulus>3102640000</elastic_modulus>
-              <ode>
-                <kp>100000</kp>
-                <kd>100</kd>
-                <max_vel>100</max_vel>
-                <min_depth>0.001</min_depth>
-              </ode>
-            </contact>
-            <friction>
-              <torsional>
-                <coefficient>1</coefficient>
-                <use_patch_radius>false</use_patch_radius>
-                <surface_radius>0.01</surface_radius>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-            <bounce/>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://plastic_cup/meshes/plastic_cup.dae</uri>
-              <scale>1 1 1</scale>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/GreyTransparent</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>false</self_collide>
-        <kinematic>false</kinematic>
-        <enable_wind>false</enable_wind>
-      </link>
-      <pose>0.38318987835370111 -0.21894875392100013 1.4300470564067969 1.2030085412078591e-07 -7.0976089379170651e-08 -0.13216914511715983</pose>
+      <pose>1.1161749890941364 -0.25253652114429825 1.4412654009000363 0.012893711191793372 -0.0053405538781397767 0.0025833254800951681</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
@@ -479,28 +454,29 @@
         <enable_wind>false</enable_wind>
         <pose>0 0 0 0 0 0</pose>
       </link>
-      <pose>0.38980399999999998 -0.16236500000000001 1.37809 -3.1415899999999999 -1.4643199999999998e-08 -0.036856299999999988</pose>
+      <pose>0.38980399999999998 -0.16236200000000001 1.37809 -3.1415899999999999 -1.51872e-08 -0.036856300000000002</pose>
       <self_collide>false</self_collide>
     </model>
     <model name='soda_can'>
       <link name='link'>
         <inertial>
-          <pose>-0.01 -0.012 0.14999999999999999 0 0 0</pose>
-          <mass>0.39000000000000001</mass>
+          <pose>-0.0044799999999999996 -0.0054799999999999996 0.24396999999999999 0 0 0</pose>
+          <mass>0.014999999999999999</mass>
           <inertia>
-            <ixx>0.00058</ixx>
+            <ixx>8.69e-10</ixx>
             <ixy>0</ixy>
             <ixz>0</ixz>
-            <iyy>0.00058</iyy>
+            <iyy>8.69e-10</iyy>
             <iyz>0</iyz>
-            <izz>0.00019000000000000001</izz>
+            <izz>3.2500000000000002e-10</izz>
           </inertia>
         </inertial>
         <collision name='collision'>
-          <pose>0 0 -0.46000000000000002 0 0 0</pose>
+          <pose>0 0 0 0 0 0</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can.dae</uri>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can2.dae</uri>
+              <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
           <surface>
@@ -509,27 +485,24 @@
                 <mu>1</mu>
                 <mu2>1</mu2>
               </ode>
-              <torsional>
-                <ode/>
-              </torsional>
             </friction>
             <contact>
               <ode>
-                <kp>10000000</kp>
+                <kp>1000000</kp>
                 <kd>1</kd>
                 <min_depth>0.001</min_depth>
                 <max_vel>0.10000000000000001</max_vel>
               </ode>
             </contact>
-            <bounce/>
           </surface>
           <max_contacts>10</max_contacts>
         </collision>
         <visual name='visual'>
-          <pose>0 0 -0.46000000000000002 0 0 0</pose>
+          <pose>0 0 0 0 0 0</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can.dae</uri>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can2.dae</uri>
+              <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
         </visual>
@@ -538,7 +511,181 @@
         <pose>0 0 0 0 0 0</pose>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>0.11814651122836399 -0.13509600449622844 1.4185060214092176 -0.011216729187534677 0.0040299703383453933 0.022777790478778179</pose>
+      <pose>-0.15887587488794475 -0.14872418730945908 1.2397728334083649 -0.011300280276057388 0.0043417524152830258 0.0502170075578161</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='soda_can2'>
+      <link name='link'>
+        <inertial>
+          <pose>-0.0044799999999999996 -0.0054799999999999996 0.24396999999999999 0 0 0</pose>
+          <mass>0.014999999999999999</mass>
+          <inertia>
+            <ixx>8.69e-10</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>8.69e-10</iyy>
+            <iyz>0</iyz>
+            <izz>3.2500000000000002e-10</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can2.dae</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1000000</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.10000000000000001</max_vel>
+              </ode>
+            </contact>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can2.dae</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.14889774005083314 -0.25922685571551213 1.239773023142474 -0.011299779533787746 0.0043397194074096578 -0.033379327436167318</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='soda_can3'>
+      <link name='link'>
+        <inertial>
+          <pose>-0.0044799999999999996 -0.0054799999999999996 0.24396999999999999 0 0 0</pose>
+          <mass>0.014999999999999999</mass>
+          <inertia>
+            <ixx>8.69e-10</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>8.69e-10</iyy>
+            <iyz>0</iyz>
+            <izz>3.2500000000000002e-10</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can2.dae</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1000000</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.10000000000000001</max_vel>
+              </ode>
+            </contact>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can2.dae</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.0075859837246283444 -0.26196597464036403 1.2397752189294207 -0.011234442062346025 0.0040110574447384832 -0.082442651929399577</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='soda_can4'>
+      <link name='link'>
+        <inertial>
+          <pose>-0.0044799999999999996 -0.0054799999999999996 0.24396999999999999 0 0 0</pose>
+          <mass>0.014999999999999999</mass>
+          <inertia>
+            <ixx>8.69e-10</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>8.69e-10</iyy>
+            <iyz>0</iyz>
+            <izz>3.2500000000000002e-10</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can2.dae</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <kp>1000000</kp>
+                <kd>1</kd>
+                <min_depth>0.001</min_depth>
+                <max_vel>0.10000000000000001</max_vel>
+              </ode>
+            </contact>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://soda_can/meshes/soda_can2.dae</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>false</self_collide>
+        <kinematic>false</kinematic>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.010128559717037267 -0.15107452578089958 1.2397729153734842 -0.011300419156094334 0.0043400432299773688 1.340459786701425</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
@@ -561,7 +708,7 @@
           <geometry>
             <mesh>
               <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://laptop/meshes/laptop.dae</uri>
-              <scale>2.4500000000000002 2.4500000000000002 2.4500000000000002</scale>
+              <scale>3.4500000000000002 3.4500000000000002 3.4500000000000002</scale>
             </mesh>
           </geometry>
           <surface>
@@ -591,7 +738,7 @@
           <geometry>
             <mesh>
               <uri>file:///home/akhil/panda_arm/install/panda_description/share/panda_description/world/model://laptop/meshes/laptop.dae</uri>
-              <scale>2.4500000000000002 2.4500000000000002 2.4500000000000002</scale>
+              <scale>3.4500000000000002 3.4500000000000002 3.4500000000000002</scale>
             </mesh>
           </geometry>
         </visual>
@@ -600,7 +747,7 @@
         <pose>0 0 0 0 0 0</pose>
         <enable_wind>false</enable_wind>
       </link>
-      <pose>0.8099996719714333 0.040953762716583769 0.96239991731230612 3.1415904641847741 1.3233462748701362e-06 -0.28484100327056544</pose>
+      <pose>0.81000008594781381 0.040957245759062899 0.96239997788522891 3.1415901117046436 6.4169817165481996e-07 -0.28484100396080392</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
@@ -753,7 +900,7 @@
       <frame name='link_2' attached_to='pan_joint'>
         <pose>0 0 0 0 0 0</pose>
       </frame>
-      <pose>0.43878200000000001 0.13431899999999999 0.77593500000000004 0 0 0</pose>
+      <pose>0.43878200000000001 0.084319000000000005 1.3993500000000001 0 0 0</pose>
       <static>false</static>
       <self_collide>false</self_collide>
     </model>
