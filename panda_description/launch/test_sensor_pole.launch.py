@@ -92,7 +92,8 @@ def generate_launch_description():
     sdf_file_path = os.path.join(
         FindPackageShare('panda_description').find('panda_description'),
         'world',
-        'planning_world.sdf'
+        # 'laptop.sdf'
+        'beer.sdf'
     )
     
     ignition_gazebo_node = IncludeLaunchDescription(
