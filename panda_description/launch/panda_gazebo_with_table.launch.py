@@ -76,7 +76,7 @@ def generate_launch_description():
                  arguments=['-name', 'panda', '-topic', '/robot_description' ,
                             '-x', '0.438782',
                             '-y', '0.134319',
-                            '-z', '0.775935'], 
+                            '-z', '1.4185060214092176'], 
                             output='screen')
 
     
@@ -92,9 +92,9 @@ def generate_launch_description():
     sdf_file_path = os.path.join(
         FindPackageShare('panda_description').find('panda_description'),
         'world',
-        # 'planning_world.sdf'
+        'planning_world.sdf'
         # 'pr2_perception.world'
-        'Mainworld.sdf'
+        # 'Mainworld.sdf'
         # planning_world.sdf
         
     )

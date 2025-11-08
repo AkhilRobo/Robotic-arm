@@ -85,14 +85,14 @@ def generate_launch_description():
     spawn_node = Node(package='ros_gz_sim', executable='create',
                  arguments=['-name', 'sensor_pole', '-topic', '/sensor_pole' ,
                             '-x', '0.438782',
-                            '-y', '0.134319',
-                            '-z', '0.775935'], 
+                            '-y', '0.084319',
+                            '-z', '1.39935'], 
                  output='screen')
 
     sdf_file_path = os.path.join(
         FindPackageShare('panda_description').find('panda_description'),
         'world',
-        'Mainworld.sdf'
+        'planning_world.sdf'
     )
     
     ignition_gazebo_node = IncludeLaunchDescription(
