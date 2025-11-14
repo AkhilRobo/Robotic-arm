@@ -7,23 +7,14 @@
 #include <pcl/features/normal_3d.h>
 #include <pcl/search/kdtree.h>
 
-// Define point type
 typedef pcl::PointXYZRGB PointT;
 
-/**
- * @brief Computes a 3D color histogram
- * @param cloud The cluster to analyze
- * @param nbins The number of bins for each channel (R, G, B)
- * @return A normalized 1D vector of histogram features
- */
 std::vector<float> computeColorHistogram(const pcl::PointCloud<PointT>::Ptr& cloud, int nbins = 16)
 {
-    // Compute the min/max of x,y,z
     float r_min = 0.0, r_max = 255.0;
     float g_min = 0.0, g_max = 255.0;
     float b_min = 0.0, b_max = 255.0;
 
-    // 1. Calculate color bins
     std::vector<float> hist(nbins * nbins * nbins, 0.0);
     float r_bin_size = (r_max - r_min) / nbins;
     float g_bin_size = (g_max - g_min) / nbins;
@@ -37,7 +28,6 @@ std::vector<float> computeColorHistogram(const pcl::PointCloud<PointT>::Ptr& clo
         hist[r_bin * nbins * nbins + g_bin * nbins + b_bin]++;
     }
 
-    // 2. Normalize histogram
     float sum = 0;
     for (float val : hist) sum += val;
     if (sum > 0)
@@ -48,32 +38,21 @@ std::vector<float> computeColorHistogram(const pcl::PointCloud<PointT>::Ptr& clo
     return hist;
 }
 
-/**
- * @brief Computes surface normals for a cloud
- * @param cloud The cluster to analyze
- * @return A cloud of normals
- */
+
 pcl::PointCloud<pcl::Normal>::Ptr getNormals(const pcl::PointCloud<PointT>::Ptr& cloud)
 {
     pcl::NormalEstimation<PointT, pcl::Normal> ne;
     ne.setInputCloud(cloud);
     pcl::search::KdTree<PointT>::Ptr tree(new pcl::search::KdTree<PointT>());
     ne.setSearchMethod(tree);
-    ne.setRadiusSearch(0.03); // Use a radius search
+    ne.setRadiusSearch(0.03); 
     pcl::PointCloud<pcl::Normal>::Ptr normals(new pcl::PointCloud<pcl::Normal>);
     ne.compute(*normals);
     return normals;
 }
 
-/**
- * @brief Computes a 3D histogram of normals
- * @param normals The normals cloud to analyze
- * @param nbins The number of bins for each channel (x, y, z)
- * @return A normalized 1D vector of histogram features
- */
 std::vector<float> computeNormalHistogram(const pcl::PointCloud<pcl::Normal>::Ptr& normals, int nbins = 8)
 {
-    // 1. Calculate normal bins
     std::vector<float> hist(nbins * nbins * nbins, 0.0);
     float x_min = -1.0, x_max = 1.0;
     float y_min = -1.0, y_max = 1.0;
@@ -91,7 +70,6 @@ std::vector<float> computeNormalHistogram(const pcl::PointCloud<pcl::Normal>::Pt
         hist[x_bin * nbins * nbins + y_bin * nbins + z_bin]++;
     }
 
-    // 2. Normalize histogram
     float sum = 0;
     for (float val : hist) sum += val;
     if (sum > 0)
@@ -102,4 +80,4 @@ std::vector<float> computeNormalHistogram(const pcl::PointCloud<pcl::Normal>::Pt
     return hist;
 }
 
-#endif // FEATURES_H
+#endif 

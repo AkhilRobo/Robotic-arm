@@ -6,12 +6,10 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <chrono> // For the timer
+#include <chrono> 
 
-// Include the *exact same* features.h file
 #include "my_pcl_processor/features.h" 
 
-// Define the point type
 typedef pcl::PointXYZRGB PointT;
 
 using namespace std::chrono_literals;
@@ -21,7 +19,6 @@ class FeatureExtractorNode : public rclcpp::Node
 public:
     FeatureExtractorNode() : Node("feature_extractor_node"), samples_taken_(0)
     {
-        // --- Parameters ---
         this->declare_parameter<std::string>("model_name", "default_model");
         this->declare_parameter<int>("max_samples", 5);
         this->declare_parameter<double>("capture_interval_sec", 2.0);
@@ -32,7 +29,7 @@ public:
 
         if (model_name_ == "default_model")
         {
-            RCLCPP_ERROR(this->get_logger(), "Model name parameter 'model_name' not set!");
+            RCLCPP_ERROR(this->get_logger(), "'model_name' not set!");
             rclcpp::shutdown();
             return;
         }
@@ -54,41 +51,33 @@ public:
             interval,
             std::bind(&FeatureExtractorNode::processAndSaveFeatures, this));
 
-        RCLCPP_INFO(this->get_logger(), "Feature Extractor node ready.");
+        RCLCPP_INFO(this->get_logger(), "Feature Extractor is running.");
         RCLCPP_INFO(this->get_logger(), "Saving %d samples for model: %s", max_samples_, model_name_.c_str());
         RCLCPP_INFO(this->get_logger(), "Capturing one sample every %.1f seconds...", capture_interval_sec);
-        RCLCPP_INFO(this->get_logger(), "Move the object in Gazebo between captures!");
+        RCLCPP_INFO(this->get_logger(), "Move the object angles and position relavive to cam in Gazebo between captures................");
     }
 
-    /**
-     * @brief Subscriber callback. Just stores the latest message.
-     */
+
     void cloudUpdateCallback(const sensor_msgs::msg::PointCloud2::SharedPtr cluster_msg)
     {
-        // Store the latest message
         std::lock_guard<std::mutex> lock(cloud_mutex_);
         latest_cloud_msg_ = cluster_msg;
     }
 
-    /**
-     * @brief Timer callback. This does all the work.
-     */
+
     void processAndSaveFeatures()
     {
-        // Check if we are done
         if (samples_taken_ >= max_samples_)
         {
             if(!shutdown_logged_) {
                 RCLCPP_INFO(this->get_logger(), "All %d samples captured. Stopping.", max_samples_);
-                timer_->cancel(); // Stop the timer
+                timer_->cancel(); 
                 shutdown_logged_ = true;
             }
             return;
         }
 
         sensor_msgs::msg::PointCloud2::SharedPtr msg_to_process;
-        
-        // Atomically get the latest cloud and clear the member
         {
             std::lock_guard<std::mutex> lock(cloud_mutex_);
             if (!latest_cloud_msg_)
@@ -97,12 +86,11 @@ public:
                 return;
             }
             msg_to_process = latest_cloud_msg_;
-            latest_cloud_msg_ = nullptr; // Mark as "used"
+            latest_cloud_msg_ = nullptr; 
         }
 
         RCLCPP_INFO(this->get_logger(), "Capturing sample %d of %d...", (samples_taken_ + 1), max_samples_);
 
-        // 1. Convert ROS msg to PCL
         pcl::PointCloud<PointT>::Ptr cluster(new pcl::PointCloud<PointT>);
         pcl::fromROSMsg(*msg_to_process, *cluster);
 
@@ -111,31 +99,24 @@ public:
             return;
         }
 
-        // 2. Compute Color Histogram
         std::vector<float> color_hist = computeColorHistogram(cluster);
 
-        // 3. Compute Normals
         pcl::PointCloud<pcl::Normal>::Ptr normals = getNormals(cluster);
 
-        // 4. Compute Normal Histogram
         std::vector<float> normal_hist = computeNormalHistogram(normals);
 
-        // 5. Concatenate features
         std::vector<float> feature_vector;
         feature_vector.insert(feature_vector.end(), color_hist.begin(), color_hist.end());
         feature_vector.insert(feature_vector.end(), normal_hist.begin(), normal_hist.end());
 
-        // 6. Save to file
         saveFeatures(feature_vector);
 
-        // 7. Increment counter
         samples_taken_++;
     }
 
     void saveFeatures(const std::vector<float>& features)
     {
         std::ofstream outfile;
-        // Open in append mode
         outfile.open(output_file_, std::ios_base::app); 
         
         if (!outfile.is_open())
@@ -144,15 +125,13 @@ public:
             return;
         }
 
-        // Write the label (model name)
         outfile << model_name_;
 
-        // Write all features
         for (const auto& feature : features)
         {
             outfile << "," << feature;
         }
-        outfile << std::endl; // New line for next entry
+        outfile << std::endl; 
 
         outfile.close();
         RCLCPP_INFO(this->get_logger(), "Successfully saved sample %d for %s.", samples_taken_ + 1, model_name_.c_str());
