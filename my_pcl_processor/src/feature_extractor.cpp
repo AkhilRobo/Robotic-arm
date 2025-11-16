@@ -3,6 +3,7 @@
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
+#include <pcl/filters/filter.h>
 #include <fstream>
 #include <vector>
 #include <string>
@@ -40,7 +41,7 @@ public:
 
    
         subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-            "/processed/downsampled",
+            "/processed/passthrough",
             10,
             std::bind(&FeatureExtractorNode::cloudUpdateCallback, this, std::placeholders::_1));
 
@@ -94,10 +95,16 @@ public:
         pcl::PointCloud<PointT>::Ptr cluster(new pcl::PointCloud<PointT>);
         pcl::fromROSMsg(*msg_to_process, *cluster);
 
-        if (cluster->empty()) {
+
+        if (!cluster->empty()) {
+            RCLCPP_WARN(this->get_logger(), "No of points in the cluster: %ld", cluster->size());
+            return;
+        }
+        else{
             RCLCPP_WARN(this->get_logger(), "Cloud is empty, skipping sample.");
             return;
         }
+
 
         std::vector<float> color_hist = computeColorHistogram(cluster);
 

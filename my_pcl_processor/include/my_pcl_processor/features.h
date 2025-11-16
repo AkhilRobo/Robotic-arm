@@ -46,6 +46,8 @@ pcl::PointCloud<pcl::Normal>::Ptr getNormals(const pcl::PointCloud<PointT>::Ptr&
     pcl::search::KdTree<PointT>::Ptr tree(new pcl::search::KdTree<PointT>());
     ne.setSearchMethod(tree);
     ne.setRadiusSearch(0.03); 
+    // ne.setKSearch(20);
+
     pcl::PointCloud<pcl::Normal>::Ptr normals(new pcl::PointCloud<pcl::Normal>);
     ne.compute(*normals);
     return normals;

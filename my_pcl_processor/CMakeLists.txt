@@ -13,6 +13,13 @@ find_package(tf2_ros REQUIRED)
 find_package(pcl_ros REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
+
+include_directories(
+  include
+  ${PCL_INCLUDE_DIRS}
+)
+
+
 find_package(PCL 1.10 REQUIRED COMPONENTS common filters segmentation kdtree search)
 
 # ------------_PCL_Node_------------
@@ -58,6 +65,18 @@ ament_target_dependencies(feture_ext_plc_node
 target_link_libraries(feture_ext_plc_node ${PCL_LIBRARIES})
 
 
+# ----------------feature_extractor------------
+add_executable(feature_extractor src/feature_extractor.cpp)
+ament_target_dependencies(feature_extractor
+  rclcpp
+  sensor_msgs
+  pcl_conversions
+)
+
+target_link_libraries(feature_extractor ${PCL_LIBRARIES})
+
+
+
 
 # ------------_Installation_------------
 
@@ -66,7 +85,13 @@ install(TARGETS
   pcd_saver_node
   cloud_tf
   feture_ext_plc_node
+  feature_extractor
   DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY include/
+  DESTINATION include
 )
 
 ament_package()
