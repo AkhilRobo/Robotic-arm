@@ -1,0 +1,24 @@
+digraph G {
+"camera_link" -> "sensor_pole/link_1/my_rgbd_camera"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"link_2" -> "camera_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"camera_link" -> "camera_link_optical"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"world" -> "link_1"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"link_1" -> "link_2"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"hand" -> "hand_tcp"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"link8" -> "hand"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"world" -> "link0"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"link7" -> "link8"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"link6" -> "link7"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+"hand" -> "leftfinger"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+"hand" -> "rightfinger"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+"link0" -> "link1"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+"link1" -> "link2"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+"link2" -> "link3"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+"link3" -> "link4"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+"link4" -> "link5"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+"link5" -> "link6"[label=" Broadcaster: default_authority\nAverage rate: 40.0\nBuffer length: 0.05\nMost recent transform: 0.5\nOldest transform: 0.45\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1763332743.050129"[ shape=plaintext ] ;
+}->"world";
+}
