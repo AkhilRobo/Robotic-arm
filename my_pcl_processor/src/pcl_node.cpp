@@ -20,6 +20,11 @@
 #include <pcl/kdtree/kdtree.h>
 
 
+//Feature extraction
+// #include "my_pcl_processor/features.h" 
+
+
+
 class PclProcessingNode : public rclcpp::Node
 {
 public:
@@ -130,10 +135,6 @@ private:
         int cluster_id = 0;
         for (const auto& cluster : cluster_indices)
         {
-            uint8_t r = rand() % 256;
-            uint8_t g = rand() % 256;
-            uint8_t b = rand() % 256;
-
             for (const auto& idx : cluster.indices)
             {
                 pcl::PointXYZRGB pt = (*cloud_objects)[idx];

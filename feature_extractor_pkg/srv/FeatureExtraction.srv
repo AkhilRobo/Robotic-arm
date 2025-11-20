@@ -1,0 +1,3 @@
+sensor_msgs/PointCloud2 input_cluster
+---
+float32[] feature_vector

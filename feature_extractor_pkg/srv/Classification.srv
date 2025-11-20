@@ -1,0 +1,5 @@
+float32[] input_features
+
+---
+string class_label
+float32 confidence_score
