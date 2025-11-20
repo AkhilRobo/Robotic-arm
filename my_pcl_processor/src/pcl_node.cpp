@@ -28,7 +28,7 @@ public:
         auto qos = rclcpp::QoS(rclcpp::KeepLast(10)).best_effort();
 
         subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-            "/camera/points",
+            "/sensor_stick/transformed_world",
             qos,
             std::bind(&PclProcessingNode::topic_callback, this, std::placeholders::_1));
 
@@ -66,7 +66,7 @@ private:
         pcl::PassThrough<pcl::PointXYZRGB> pass;
         pass.setInputCloud(cloud_downsampled);
         pass.setFilterFieldName("z");        
-        pass.setFilterLimits(0.09935, 0.575935);    
+        pass.setFilterLimits(0.0, 0.19);    
         pass.filter(*cloud_passed);
 
         publish_cloud(cloud_passed, msg->header, passthrough_pub_);
@@ -142,10 +142,9 @@ private:
                 color_pt.x = pt.x;
                 color_pt.y = pt.y;
                 color_pt.z = pt.z;
-                color_pt.r = r;
-                color_pt.g = g;
-                color_pt.b = b;
-                
+                color_pt.r = pt.r;
+                color_pt.g = pt.g;
+                color_pt.b = pt.b;
                 cloud_clusters->push_back(color_pt);
             }
             cluster_id++;

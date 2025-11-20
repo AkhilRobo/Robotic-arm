@@ -18,7 +18,7 @@ public:
 
 
         subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-            "/processed/passthrough", 
+            "/processed/downsampled", 
             qos,
             std::bind(&PcdSaverNode::topic_callback, this, std::placeholders::_1));
 
