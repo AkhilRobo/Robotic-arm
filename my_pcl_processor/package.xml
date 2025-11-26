@@ -16,6 +16,7 @@
   <depend>tf2_ros</depend>
   <depend>pcl_ros</depend>
   <depend>geometry_msgs</depend>
+  <depend>feature_extractor_pkg</depend>
 
   
   <test_depend>ament_lint_auto</test_depend>

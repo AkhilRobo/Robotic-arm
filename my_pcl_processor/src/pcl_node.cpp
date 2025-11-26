@@ -21,9 +21,11 @@
 
 
 //Feature extraction
-// #include "my_pcl_processor/features.h" 
+
+#include "feature_extractor_pkg/srv/feature_extraction.hpp"
 
 
+using FeatureExtraction = feature_extractor_pkg::srv::FeatureExtraction;
 
 class PclProcessingNode : public rclcpp::Node
 {
@@ -41,8 +43,13 @@ public:
         passthrough_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/processed/passthrough", 10);
         plane_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/processed/plane", 10);
         clusters_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/processed/clusters", 10);
+        feature_client_ = this->create_client<FeatureExtraction>("feature_extraction_service");
 
         RCLCPP_INFO(this->get_logger(), "PCL Processing Node has started.");
+
+        if (!feature_client_->wait_for_service(std::chrono::seconds(1))) {
+        RCLCPP_WARN(this->get_logger(), "Feature extraction service not available.");
+    }
     }
 
 private:
@@ -135,6 +142,9 @@ private:
         int cluster_id = 0;
         for (const auto& cluster : cluster_indices)
         {
+        pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_cluster_indivi(new pcl::PointCloud<pcl::PointXYZRGB>);
+        sensor_msgs::msg::PointCloud2 output_cluster;
+         
             for (const auto& idx : cluster.indices)
             {
                 pcl::PointXYZRGB pt = (*cloud_objects)[idx];
@@ -147,7 +157,36 @@ private:
                 color_pt.g = pt.g;
                 color_pt.b = pt.b;
                 cloud_clusters->push_back(color_pt);
+                cloud_cluster_indivi->push_back(color_pt);
             }
+            RCLCPP_INFO(this->get_logger(), "Cluster %d has %ld points.", cluster_id, cloud_cluster_indivi->size());
+            // with the ros2 client call the feature_extractor service here and pass cloud_cluster_indivi and then get the features back
+            pcl::toROSMsg(*cloud_cluster_indivi, output_cluster);
+            output_cluster.header.frame_id = msg->header.frame_id;
+            output_cluster.header.stamp = this->get_clock()->now();
+
+            if (!feature_client_->wait_for_service(std::chrono::seconds(0))) {
+            RCLCPP_ERROR(this->get_logger(), "Feature extraction service is NOT ready. Skipping cluster %d.", cluster_id);
+        } else {
+            auto request = std::make_shared<FeatureExtraction::Request>();
+            request->input_cluster = output_cluster;
+
+            auto result_future = feature_client_->async_send_request(request);
+
+            // Wait for the result
+            if (rclcpp::spin_until_future_complete(this->get_node_base_interface(), result_future) ==
+                rclcpp::FutureReturnCode::SUCCESS)
+            {
+                auto response = result_future.get();
+                RCLCPP_INFO(this->get_logger(), "Received features for cluster %d with %zu dimensions.", cluster_id, response->feature_vector.size());
+            }
+            else
+            {
+                RCLCPP_ERROR(this->get_logger(), "Failed to call feature extraction service for cluster %d.", cluster_id);
+            }
+        }
+        //use the response variable and pass it to the ML model server for prediction
+        //with the predections make a labeled text in rviz for checking in realtime
             cluster_id++;
         }
 
@@ -180,6 +219,7 @@ private:
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr passthrough_pub_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr plane_pub_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr clusters_pub_;
+    rclcpp::Client<FeatureExtraction>::SharedPtr feature_client_;
 };
 
 int main(int argc, char* argv[])
