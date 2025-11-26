@@ -34,16 +34,29 @@ public:
     {
         auto qos = rclcpp::QoS(rclcpp::KeepLast(10)).best_effort();
 
+        callback_group_subscriber_ = this->create_callback_group(
+            rclcpp::CallbackGroupType::MutuallyExclusive);
+        callback_group_client_ = this->create_callback_group(
+            rclcpp::CallbackGroupType::MutuallyExclusive);
+
+        rclcpp::SubscriptionOptions sub_options;
+        sub_options.callback_group = callback_group_subscriber_;
+
+
+
         subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
             "/sensor_stick/transformed_world",
             qos,
-            std::bind(&PclProcessingNode::topic_callback, this, std::placeholders::_1));
+            std::bind(&PclProcessingNode::topic_callback, this, std::placeholders::_1),
+        sub_options);
 
         downsampled_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/processed/downsampled", 10);
         passthrough_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/processed/passthrough", 10);
         plane_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/processed/plane", 10);
         clusters_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/processed/clusters", 10);
-        feature_client_ = this->create_client<FeatureExtraction>("feature_extraction_service");
+        feature_client_ = this->create_client<FeatureExtraction>("feature_extraction_service",
+            rmw_qos_profile_services_default, 
+            callback_group_client_);
 
         RCLCPP_INFO(this->get_logger(), "PCL Processing Node has started.");
 
@@ -173,20 +186,23 @@ private:
 
             auto result_future = feature_client_->async_send_request(request);
 
-            // Wait for the result
-            if (rclcpp::spin_until_future_complete(this->get_node_base_interface(), result_future) ==
-                rclcpp::FutureReturnCode::SUCCESS)
+            std::future_status status = result_future.wait_for(std::chrono::seconds(5)); 
+
+             if (status == std::future_status::ready)
             {
                 auto response = result_future.get();
-                RCLCPP_INFO(this->get_logger(), "Received features for cluster %d with %zu dimensions.", cluster_id, response->feature_vector.size());
+                RCLCPP_INFO(this->get_logger(), "Cluster %d: Received %zu features.", cluster_id, response->feature_vector.size());
+                
+                //use the response variable and pass it to the ML model server for prediction
+        //with the predections make a labeled text in rviz for checking in realtime
             }
+           
             else
             {
                 RCLCPP_ERROR(this->get_logger(), "Failed to call feature extraction service for cluster %d.", cluster_id);
             }
         }
-        //use the response variable and pass it to the ML model server for prediction
-        //with the predections make a labeled text in rviz for checking in realtime
+        
             cluster_id++;
         }
 
@@ -220,13 +236,21 @@ private:
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr plane_pub_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr clusters_pub_;
     rclcpp::Client<FeatureExtraction>::SharedPtr feature_client_;
+
+    rclcpp::CallbackGroup::SharedPtr callback_group_subscriber_;
+    rclcpp::CallbackGroup::SharedPtr callback_group_client_;
 };
 
 int main(int argc, char* argv[])
 {
     rclcpp::init(argc, argv);
     auto node = std::make_shared<PclProcessingNode>();
-    rclcpp::spin(node);
+    
+    rclcpp::executors::MultiThreadedExecutor executor;
+    executor.add_node(node);
+    executor.spin();
+
     rclcpp::shutdown();
+
     return 0;
 }
