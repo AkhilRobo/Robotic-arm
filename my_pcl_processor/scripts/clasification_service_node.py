@@ -34,7 +34,6 @@ class ModelServiceNode(Node):
                 self.get_logger().error(f"Model file not found at: {path}")
                 return
 
-            self.get_logger().info(f"Loading model bundle from {path}...")
             
             with open(path, 'rb') as f:
                 bundle = pickle.load(f)
@@ -43,7 +42,6 @@ class ModelServiceNode(Node):
             self.scaler = bundle['scaler']
             self.encoder = bundle['encoder']
             
-            self.get_logger().info("Model, Scaler, and Encoder loaded successfully.")
             
         except Exception as e:
             self.get_logger().error(f"Failed to load model: {e}")
