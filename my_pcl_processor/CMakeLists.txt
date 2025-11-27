@@ -103,6 +103,10 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
+install(PROGRAMS
+  scripts/clasification_service_node.py
+  DESTINATION lib/${PROJECT_NAME}  
+)
 install(
   DIRECTORY include
   DESTINATION include
