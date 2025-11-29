@@ -1,6 +1,10 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/point_cloud2.hpp>
 
+// Viz library
+#include <visualization_msgs/msg/marker.hpp>
+#include <geometry_msgs/msg/point.hpp>
+
 // PCL
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/point_cloud.h>
@@ -19,10 +23,15 @@
 // PCL k-d
 #include <pcl/kdtree/kdtree.h>
 
+// PCL centriod
+#include <pcl/common/centroid.h>
+
 // Feature extraction
 
 #include "feature_extractor_pkg/srv/feature_extraction.hpp"
 #include "feature_extractor_pkg/srv/classification.hpp"
+
+typedef pcl::PointXYZRGB PointT;
 
 using FeatureExtraction = feature_extractor_pkg::srv::FeatureExtraction;
 using Classification = feature_extractor_pkg::srv::Classification;
@@ -62,6 +71,8 @@ public:
         classification_client_ = this->create_client<Classification>("model_classification_service",
                                                                      rmw_qos_profile_services_default,
                                                                      callback_group_client_two_);
+
+        marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("visualization_marker", 10);
 
         RCLCPP_INFO(this->get_logger(), "PCL Processing Node has started.");
 
@@ -164,7 +175,6 @@ private:
             {
                 pcl::PointXYZRGB pt = (*cloud_objects)[idx];
 
-              
                 cloud_clusters->push_back(pt);
                 cloud_cluster_indivi->push_back(pt);
             }
@@ -212,6 +222,8 @@ private:
                             auto response_classification = result_future_classification.get();
                             RCLCPP_INFO(this->get_logger(), "Object detection worked and detected: %s, with probability/confidence of %f ", response_classification->class_label.c_str(),
                                         response_classification->confidence_score);
+
+                            publishLabel(cloud_cluster_indivi, response_classification->class_label, cluster_id);
                         }
 
                         else
@@ -256,6 +268,36 @@ private:
         publisher->publish(output_msg);
     }
 
+    void publishLabel(const pcl::PointCloud<PointT>::Ptr &cluster, const std::string &label, int id)
+    {
+        Eigen::Vector4f centroid;
+        pcl::compute3DCentroid(*cluster, centroid);
+
+        visualization_msgs::msg::Marker marker;
+        marker.header.frame_id = "world";
+        marker.header.stamp = this->now();
+        marker.ns = "object_labels";
+        marker.id = id;
+        marker.type = visualization_msgs::msg::Marker::TEXT_VIEW_FACING;
+        marker.action = visualization_msgs::msg::Marker::ADD;
+
+        marker.pose.position.x = centroid[0];
+        marker.pose.position.y = centroid[1];
+        marker.pose.position.z = centroid[2] + 0.05;
+        marker.pose.orientation.w = 1.0;
+
+        marker.scale.z = 0.05;
+        marker.color.r = 1.0;
+        marker.color.g = 1.0;
+        marker.color.b = 0.0;
+        marker.color.a = 1.0;
+
+        marker.text = label;
+
+        marker.lifetime = rclcpp::Duration::from_seconds(0.0);
+        marker_pub_->publish(marker);
+    }
+
     rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr subscription_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr downsampled_pub_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr passthrough_pub_;
@@ -267,6 +309,8 @@ private:
     rclcpp::CallbackGroup::SharedPtr callback_group_subscriber_;
     rclcpp::CallbackGroup::SharedPtr callback_group_client_;
     rclcpp::CallbackGroup::SharedPtr callback_group_client_two_;
+
+    rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
 };
 
 int main(int argc, char *argv[])

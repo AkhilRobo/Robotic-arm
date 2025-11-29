@@ -12,6 +12,8 @@ find_package(pcl_conversions REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(pcl_ros REQUIRED)
 find_package(feature_extractor_pkg REQUIRED)
+find_package(visualization_msgs REQUIRED)
+
 
 
 
@@ -34,6 +36,8 @@ ament_target_dependencies(pcl_node
   sensor_msgs
   pcl_conversions
   feature_extractor_pkg
+  visualization_msgs
+  geometry_msgs
 )
 
 # ------------_PCD_Saver_Node_------------
@@ -89,7 +93,16 @@ ament_target_dependencies(feature_extractor_server
 
 target_link_libraries(feature_extractor_server ${PCL_LIBRARIES})
 
+# # ----------------clasification_server------------
+# add_executable(feature_extractor_server src/.cpp)
+# ament_target_dependencies(feature_extractor_server
+#   rclcpp
+#   sensor_msgs
+#   pcl_conversions
+#   feature_extractor_pkg
+# )
 
+# target_link_libraries(feature_extractor_server ${PCL_LIBRARIES})
 
 # ------------_Installation_------------
 
