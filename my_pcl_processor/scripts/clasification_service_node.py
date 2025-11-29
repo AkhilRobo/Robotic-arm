@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 import rclpy
 from rclpy.node import Node
@@ -5,6 +6,9 @@ import pickle
 import numpy as np
 import os
 
+# sklearn imports required for loading pickled model
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
 
 from feature_extractor_pkg.srv import Classification
 
@@ -21,11 +25,13 @@ class ModelServiceNode(Node):
 
         self.load_model(model_path)
 
+        # FIXED CALLBACK!!!
         self.srv = self.create_service(
             Classification,
             'model_classification_service',
-            self.classification_callback(Classification.Request, Classification.Response)
+            self.classification_callback
         )
+
         self.get_logger().info('Service Server Ready: waiting for requests...')
 
     def load_model(self, path):
@@ -34,15 +40,15 @@ class ModelServiceNode(Node):
                 self.get_logger().error(f"Model file not found at: {path}")
                 return
 
-            
             with open(path, 'rb') as f:
                 bundle = pickle.load(f)
             
             self.model = bundle['model']
             self.scaler = bundle['scaler']
             self.encoder = bundle['encoder']
-            
-            
+
+            self.get_logger().info("Model loaded successfully.")
+
         except Exception as e:
             self.get_logger().error(f"Failed to load model: {e}")
 
@@ -53,27 +59,25 @@ class ModelServiceNode(Node):
             response.confidence_score = 0.0
             return response
 
-        self.get_logger().info(f"Received request with {len(request.input_features)} features.")
-
         try:
-            
             input_data = np.array(request.input_features).reshape(1, -1)
 
-    
             scaled_data = self.scaler.transform(input_data)
 
             prediction_encoded = self.model.predict(scaled_data)
-            confidence_scores = np.max(self.model.predict_proba(scaled_data))
+            # confidence_scores = float(np.max(self.model.predict_proba(scaled_data)))
 
             prediction_label = self.encoder.inverse_transform(prediction_encoded)
 
             response.class_label = str(prediction_label[0])
-            response.confidence_score = float(confidence_scores)
+            response.confidence_score = 1.0 
+
             self.get_logger().info(f"Prediction: {response.class_label}")
 
         except Exception as e:
             self.get_logger().error(f"Prediction logic failed: {e}")
-            response.label = "ERROR_COMPUTATION"
+            response.class_label = "ERROR_COMPUTATION"
+            response.confidence_score = 0.0
 
         return response
 
